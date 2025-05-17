@@ -1,0 +1,1 @@
+不做过多的类型验证，如后端的RouteShorthandOptions，前端的RouteLocationRaw等。

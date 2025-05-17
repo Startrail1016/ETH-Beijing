@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2020", // 或更新版本，如 es2022
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true // 如果您计划导入 .json 文件
+  },
+  "include": ["src/**/*"], // 只编译 src 目录下的文件
+  "exclude": ["node_modules", "**/*.spec.ts"] // 排除 node_modules 和测试文件
+}

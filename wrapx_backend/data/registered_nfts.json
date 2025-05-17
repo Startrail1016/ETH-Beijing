@@ -1,0 +1,9 @@
+[
+  {
+    "collectionAddress": "0x123",
+    "baseURL": "http://localhost:3002/chat",
+    "serviceName": "坏猫",
+    "creatorAddress": "0x5d99b7bd13c3e6a7106e7cf484563807cd13654b",
+    "registrationDate": "2025-05-17T20:59:21.866Z"
+  }
+]

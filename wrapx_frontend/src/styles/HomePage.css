@@ -1,0 +1,455 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f4f6f8; /* Or #202123 for a darker theme like common AI chats */
+  height: 100%;
+  color: #333; /* Default text color */
+}
+
+#root {
+  height: 100%;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: row; /* Changed to row for sidebar layout */
+  height: 100vh;
+  background-color: #121212; /* 深灰色背景 */
+  height: 100%;
+  color: #e0e0e0; /* 浅色文字 */
+}
+
+#root {
+  height: 100%;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: row; /* Changed to row for sidebar layout */
+  height: 100vh;
+  background-color: #1e1e1e; /* 容器背景色 */
+  overflow: hidden;
+}
+
+/* New Sidebar Styles */
+.sidebar {
+  width: 260px;
+  background-color: #2c2c2c; /* 侧边栏深色 */
+  color: #e0e0e0; /* 侧边栏文字浅色 */
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #3c3c3c; /* 深色分隔线 */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  /* 确保 sidebar 本身能正确处理内部 flex 元素的布局 */
+  justify-content: space-between; /* 这可能不是必需的，如果 agent-list-container 正确 flex-grow */
+}
+
+/* 新增 Agent 列表容器样式 */
+.agent-list-container {
+  flex-grow: 1; /* 占据所有可用的垂直空间 */
+  overflow-y: auto; /* 如果 Agent 列表过长，则显示滚动条 */
+  margin-bottom: 15px; /* 与下方的按钮留出一些间距 */
+  /* 你可以根据需要添加其他样式，例如 padding */
+}
+
+.sidebar-header {
+  padding: 0 10px 20px 10px;
+  font-size: 0.9em;
+  color: #b0b0b0; /* 侧边栏头部次要文字颜色 */
+  /* border-bottom: 1px solid #444; */
+  /* margin-bottom: 15px; */
+}
+
+.sidebar-item {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-item:hover {
+  background-color: #343541;
+}
+
+.sidebar-item.active {
+  background-color: rgb(127, 95, 220); /* 激活项使用主题紫色 */
+  color: #ffffff; /* 激活项文字为白色以保证对比度 */
+}
+
+/* 新增的添加服务按钮样式 */
+.add-service-button {
+  background-color: rgb(127, 95, 220); /* 主题紫色，与 Connect Wallet 按钮一致 */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px; /* 与 Connect Wallet 按钮一致的圆角 */
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  width: calc(100% - 20px); /* 按钮宽度，考虑 sidebar 的 padding */
+  margin: 0 10px 10px 10px; /* 移除上边距，因为 agent-list-container 会有下边距 */
+  box-sizing: border-box; /* 确保 padding 和 border 不会增加总宽度 */
+  text-align: center;
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.add-service-button:hover {
+  background-color: rgb(107, 75, 200); /* 悬停时颜色变深 */
+  transform: translateY(-1px);
+}
+
+.add-service-button:active {
+  transform: translateY(0px);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 确保在最上层 */
+}
+
+.modal-content {
+  background-color: #2c2c2c; /* 与侧边栏背景色一致 */
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px; /* 模态框最大宽度 */
+  color: #e0e0e0; /* 浅色文字 */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.modal-content .form-group {
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  color: #b0b0b0; /* 标签颜色 */
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="url"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #343541; /* 输入框背景色 */
+  color: #fff; /* 输入框文字颜色 */
+  box-sizing: border-box; /* 确保 padding 不会影响总宽度 */
+  font-size: 0.95em;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="url"]:focus {
+  outline: none;
+  border-color: rgb(127, 95, 220); /* 焦点时边框颜色为主题紫 */
+  box-shadow: 0 0 0 2px rgba(127, 95, 220, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end; /* 按钮靠右对齐 */
+  gap: 10px; /* 按钮之间的间距 */
+  margin-top: 20px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.modal-button.primary {
+  background-color: rgb(127, 95, 220); /* 主题紫色 */
+  color: white;
+}
+
+.modal-button.primary:hover {
+  background-color: rgb(107, 75, 200);
+}
+
+.modal-button.secondary {
+  background-color: #4a4a4a; /* 次要按钮背景色 */
+  color: #e0e0e0;
+  border: 1px solid #5c5c5c;
+}
+
+.modal-button.secondary:hover {
+  background-color: #5a5a5a;
+}
+
+
+/* Main content area */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Important for scrolling within messages */
+  background-color: #1e1e1e; /* 主内容区背景色 */
+}
+
+/* New Top Bar Styles */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #3c3c3c; /* 深色分隔线 */
+  height: 40px; /* Fixed height for top bar */
+  flex-shrink: 0; /* Prevent top-bar from shrinking */
+}
+
+.top-bar-title {
+  font-size: 0.85em; /* Small text */
+  color: #b0b0e0; /* 顶部栏标题文字颜色 */
+}
+
+/* 新的 Connect Wallet 按钮样式 */
+.connect-wallet-button {
+  background-color: rgb(127, 95, 220); /* 主题紫色 */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px; /* 圆角 */
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.connect-wallet-button:hover {
+  background-color: rgb(107, 75, 200); /* 悬停时颜色变深 */
+}
+
+/* Styling for the container of ConnectWallet/Account component */
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Connect Wallet 按钮样式 */
+.connect-wallet-button {
+  background-color: rgb(127, 95, 220); /* 主题紫色 */
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.connect-wallet-button:hover {
+  background-color: rgb(107, 75, 200);
+  transform: translateY(-1px);
+}
+
+.connect-wallet-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+
+/* Account 组件 (钱包已连接时显示) 的样式 */
+.account-details {
+  display: flex;
+  align-items: center;
+  background-color: #2c2c2c; /* 深灰色背景 */
+  padding: 6px 8px 6px 12px; /* 上下6px，左12px，右8px */
+  border-radius: 8px; /* 与 connect-wallet-button 一致的圆角 */
+  border: 1px solid #3c3c3c; /* 更柔和的边框 */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); /* 轻微阴影 */
+}
+
+.account-details .address-display {
+  color: #e0e0e0; /* 浅色文字显示地址 */
+  font-size: 0.85em;
+  margin-right: 10px; /* 地址和按钮之间的间距 */
+  font-family: 'SF Mono', 'Courier New', Courier, monospace; /* 优先使用 SF Mono，更现代的等宽字体 */
+  white-space: nowrap;
+}
+
+.account-details .disconnect-button {
+  background-color: transparent; /* 透明背景 */
+  color: #b0b0e0; /* 次要文字颜色，不那么突出 */
+  border: 1px solid #4a4a4a; /* 灰色边框 */
+  padding: 5px 10px; /* 调整内边距使其更精致 */
+  border-radius: 6px; /* 轻微圆角 */
+  font-size: 0.8em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.account-details .disconnect-button:hover {
+  color: rgb(127, 95, 220); /* 悬停时文字变为主题紫色 */
+  border-color: rgb(127, 95, 220); /* 悬停时边框变为主题紫色 */
+  background-color: rgba(127, 95, 220, 0.1); /* 轻微的紫色背景反馈 */
+}
+
+/* Chat Messages Area - adjusted to fit within main-content */
+.chat-messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 可以稍微减小消息间的间隙 */
+  max-width: 900px; /* Max width for message content for readability */
+  width: 100%;
+  margin: 10px auto; /* 调整外边距，保持之前的修改 */
+  box-sizing: border-box;
+  /* 考虑为暗色主题调整或移除渐变，或者使用更微妙的暗色渐变 */
+  /* background: linear-gradient(to bottom, #1e1e1e 0%, #1a1a1a 100%); */
+  border-radius: 8px; /* 保持之前的圆角修改 */
+}
+
+.message {
+  padding: 8px 12px; /* 用户消息的内边距 */
+  border-radius: 16px; 
+  max-width: 75%; 
+  word-wrap: break-word;
+  line-height: 1.4; 
+  transition: all 0.3s ease; 
+}
+
+/* 确保消息内的 p 标签没有额外的边距导致留白过大 */
+.message p {
+  margin: 0; /* 移除 p 标签默认的上下边距 */
+  padding: 0; /* 确保 p 标签没有内边距 */
+}
+
+.message:hover {
+  /* 这个悬停效果可能不适用于扁平化的 AI 消息，我们将在下面为 AI 消息重置它 */
+  transform: translateY(-2px); 
+}
+
+.message.user {
+  background-color: rgb(127, 95, 220); 
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 5px; /* 用户消息保持气泡感 */
+}
+
+.message.ai {
+  background-color: transparent; /* AI 消息背景透明 */
+  color: #e0e0e0; /* AI 消息文字浅色，保持不变 */
+  align-self: flex-start; /* 左对齐 */
+  border-radius: 0; /* 移除圆角 */
+  padding: 4px 0; /* 调整内边距，主要保留垂直间距，移除水平内边距 */
+  max-width: 100%; /* AI 消息可以占据更大宽度 */
+  box-shadow: none; /* 移除可能继承的阴影 */
+}
+
+/* 如果AI消息内的p标签有特定样式，也可能需要调整 */
+.message.ai p {
+  /* 根据需要调整，通常继承 .message p 的 margin: 0; padding: 0; 即可 */
+}
+
+/* 重置 AI 消息的悬停效果，因为不再是“气泡” */
+.message.ai:hover {
+  transform: none; /* 移除上浮效果 */
+  box-shadow: none; /* 确保没有阴影 */
+}
+
+/* Chat Input Area - adjusted to fit within main-content */
+.chat-input-area {
+  display: flex;
+  padding: 15px 20px; /* Consistent padding */
+  border-top: 1px solid #3c3c3c; /* 深色分隔线 */
+  background-color: #1e1e1e; /* 输入区域背景色，与主内容区一致或稍有区别 */
+  max-width: 900px; /* Match chat-messages max-width */
+  width: 100%;
+  margin: 0 auto; /* Center input area */
+  box-sizing: border-box;
+  flex-shrink: 0; /* Prevent input area from shrinking */
+}
+
+.chat-input-area input {
+  flex-grow: 1;
+  padding: 12px 18px; /* More padding */
+  border: 1px solid #ced4da;
+  border-radius: 22px; /* More rounded */
+  margin-right: 12px;
+  font-size: 1em;
+  background-color: #2c2c2c; /* 输入框背景色 */
+  color: #e0e0e0; /* 输入框文字浅色 */
+}
+
+.chat-input-area input:focus {
+  outline: none;
+  border-color: rgb(127, 95, 220); /* 聚焦时边框使用主题紫色 */
+  box-shadow: 0 0 0 0.2rem rgba(127, 95, 220, 0.25); /* 聚焦时阴影使用主题紫色 */
+}
+
+.chat-input-area button {
+  padding: 0 15px; /* Adjust padding for potentially icon button */
+  min-width: 44px; /* Ensure button has a decent tap target */
+  height: 44px;
+  background-color: rgb(127, 95, 220); /* 按钮背景使用主题紫色 */
+  color: white;
+  border: none;
+  border-radius: 22px; /* Match input radius */
+  cursor: pointer;
+  font-size: 1em; /* Text size, or use for icon size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.chat-input-area button:hover {
+  background-color: rgb(107, 75, 200); /* 按钮悬停时颜色变深一些 */
+}
+
+/* Removed .chat-header as it's replaced by .top-bar */
+
+/* 美化聊天消息框 - 这部分样式已合并到上面的 .chat-messages */
+/*
+.chat-messages {
+  border-radius: 8px; 
+  margin: 10px auto; 
+}
+
+.message {
+  transition: all 0.3s ease; 
+}
+
+.message:hover {
+  transform: translateY(-2px); 
+}
+*/
