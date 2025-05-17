@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "base-mcp": {
+      "command": "npm",
+      "args": [
+        "run",
+        "run",
+        "--prefix",
+        "/Users/cheyuanyuan/Desktop/Trae/agentball-mcp1-master"
+      ],
+      "env": {
+        "COINBASE_API_KEY_NAME": "8eb3809d-a764-457e-9259-16bb5e1244e0",
+        "COINBASE_API_PRIVATE_KEY": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIJzJaorCbuzTW39BVFbA1ut1YaG5KOiJqiy7Rk3pZ49moAoGCCqGSM49\nAwEHoUQDQgAEfa6BiLZDcrSzB/nag+7k9guLUdp8RPO2Hz3ZupSwweei8buli2TL\nzoDtIbH6DEDu+rWU7XuzG78/7Hafh0/8Fg==\n-----END EC PRIVATE KEY-----\n",
+        "PRIVATE_KEY": "0x4ab76ab76ec753c7793e16e1c1b8ca184c0c521f243c8a117c26bda6645782d9",
+        "CHAIN_ID": "84532",
+        "WRAPX_DEPLOYER_ADDRESS": "0x0b62b50F7B671Dc3E5ea6d19A4d1f702FC22466e"
+      }
+    }
+  }
+}
