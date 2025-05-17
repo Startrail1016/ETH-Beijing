@@ -1,0 +1,19 @@
+{
+  "name": "agentball",
+  "version": "1.0.0",
+  "description": "For ETH",
+  "main": "index.js",
+  "scripts": {
+    "test": "cyy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Startrail1016/ETH-Beijing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Startrail1016/ETH-Beijing/issues"
+  },
+  "homepage": "https://github.com/Startrail1016/ETH-Beijing#readme"
+}
