@@ -1,0 +1,4 @@
+/**
+ * OpenRouter types
+ */
+export {};
