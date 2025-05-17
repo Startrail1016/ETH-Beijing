@@ -1,4 +1,4 @@
-# About Real-World Use Cases for Base MCP
+# About Real-World Use Cases for Base MCP.
 
 ![Base MCP](../public/SendUSDC.gif)
 
