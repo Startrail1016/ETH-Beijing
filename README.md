@@ -53,11 +53,13 @@
 - 聊天框能与 AI 模型对话
 
  ## 网页跳转WrapX介绍
-Website：https://www.wrapx.ai/
-Official X:https://x.com/wrap_x
-Docs:https://docs.wrapx.ai/
+- Website：https://www.wrapx.ai/
+- Official X:https://x.com/wrap_x
+- Docs:https://docs.wrapx.ai/
 ![QQ20250507-231000](https://github.com/user-attachments/assets/a2316f84-0334-405e-8c34-2760687161dc)
 
 WrapX 是一个无许可的链上流动性协议，允许用户将原生资产进行包装成 WToken，生成基于使用情况动态变化的用户与协议关系的表示。
 
 WToken 是通过包装过程创建的非同质化代币（NFT），代表对集成了 WrapX 的平台上特定服务或功能的代币化访问权限。其价值受到市场需求和包装资产数量等因素的影响。持有 WToken 的用户不仅能够享有平台的专属功能，还能随着包装资产的增加，享受 WToken 价值潜在的升值收益。
+
+用户可以通过进行Wrap和Unwrap来进行WToken的生成和销毁，WToken可在公开市场进行交易。
